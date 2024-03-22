@@ -1,32 +1,80 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Tldraw, createShapeId } from "tldraw";
 import "tldraw/tldraw.css";
 
 export default function App() {
-  const [xCoordinate, setXCoordinate] = useState(350); // Step 1: Add a state for the x coordinate
+  // State for the x-coordinate of the rectangle
+  const [xCoordinate, setXCoordinate] = useState(350);
   const [editorInstance, setEditorInstance] = useState(null);
 
   const handleMount = (editor) => {
-    setEditorInstance(editor); // Store the editor instance
+    setEditorInstance(editor); // Store the editor instance for later use
+
+    // Initially create two rectangles and an arrow between them
+    const rectangleId1 = createShapeId("rectangle1");
+    const rectangleId2 = createShapeId("rectangle2");
+    const arrowId = createShapeId("arrow");
+
+    // Create the blue rectangle, yellow rectangle, and the arrow
+    editor.createShapes([
+      {
+        id: rectangleId1,
+        type: "geo",
+        x: xCoordinate,
+        y: 300,
+        props: {
+          geo: "rectangle",
+          w: 150,
+          h: 75,
+          dash: "draw",
+          color: "blue",
+          size: "m",
+        },
+      },
+      {
+        id: rectangleId2,
+        type: "geo",
+        x: 500,
+        y: 500,
+        props: {
+          geo: "rectangle",
+          w: 100,
+          h: 100,
+          dash: "draw",
+          color: "yellow",
+          size: "m",
+        },
+      },
+      {
+        id: arrowId,
+        type: "arrow",
+        props: {
+          start: {
+            type: "binding",
+            boundShapeId: rectangleId1,
+            normalizedAnchor: { x: 0.5, y: 0.5 },
+            isExact: false,
+            isPrecise: true,
+          },
+          end: {
+            type: "binding",
+            boundShapeId: rectangleId2,
+            normalizedAnchor: { x: 0.5, y: 0.5 },
+            isExact: false,
+            isPrecise: true,
+          },
+        },
+      },
+    ]);
   };
 
+  // Update the first rectangle's position when the xCoordinate state changes
   useEffect(() => {
     if (editorInstance) {
-      const rectangleId1 = createShapeId("rectangle1");
-      editorInstance.createShapes([
+      editorInstance.updateShapes([
         {
-          id: rectangleId1,
-          type: "geo",
+          id: createShapeId("rectangle1"),
           x: xCoordinate,
-          y: 300,
-          props: {
-            geo: "rectangle",
-            w: 150,
-            h: 75,
-            dash: "draw",
-            color: "blue",
-            size: "m",
-          },
         },
       ]);
     }
@@ -41,7 +89,9 @@ export default function App() {
           left: "20px",
         }}
       >
+        <label htmlFor="xCoordinateSlider">X Coordinate: </label>
         <input
+          id="xCoordinateSlider"
           type="range"
           min="0"
           max="1000"
@@ -54,10 +104,10 @@ export default function App() {
       </div>
       <div
         style={{
-          position: "relative",
+          position: "absolute",
           width: "1000px",
           height: "1000px",
-          marginTop: "50px", // Add margin to ensure the slider does not overlap the Tldraw component
+          top: "50px",
         }}
       >
         <Tldraw onMount={handleMount}></Tldraw>
