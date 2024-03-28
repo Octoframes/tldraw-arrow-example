@@ -2,6 +2,21 @@ import { useState, useEffect } from "react";
 import { Tldraw, createShapeId } from "tldraw";
 import "tldraw/tldraw.css";
 
+const overrides = {
+  //[a]
+  actions(_editor, actions) {
+    actions["delete"].kbd = "x";
+    return actions;
+  },
+  //[b]
+  tools(_editor, tools) {
+    tools["hand"].kbd = "g";
+    tools["select"].kbd = "tab";
+    tools["draw"].kbd = "tab";
+    return tools;
+  },
+};
+
 export default function App() {
   // State for the x-coordinate of the rectangle
   const [xCoordinate, setXCoordinate] = useState(350);
@@ -110,7 +125,7 @@ export default function App() {
           top: "50px",
         }}
       >
-        <Tldraw onMount={handleMount}></Tldraw>
+        <Tldraw onMount={handleMount} overrides={overrides}></Tldraw>
       </div>
     </>
   );
