@@ -9,20 +9,20 @@ export default function App() {
     const petal_height = 100;
     const sepal_width = 50;
     const sepal_height = 110;
-    const angles = [0, (Math.PI * 2) / 3, (Math.PI * 4) / 3];
-    const anglesBack = angles.map((angle) => angle + Math.PI / 3); // Adjusted angles
+    const angles_petal = [0, (Math.PI * 2) / 3, (Math.PI * 4) / 3];
+    const angles_sepal = angles_petal.map((angle) => angle + Math.PI / 3);
 
     const shapes = [
-      // Back petals (light-violet, using sepal dimensions)
-      ...anglesBack.map((angle, index) => {
-        const id = createShapeId(`bgEllipseBack${index + 1}`);
+      // Sepals (light-violet)
+      ...angles_sepal.map((angle, index) => {
+        const id = createShapeId(`sepal${index + 1}`);
         const x = centerX + Math.sin(angle) * (sepal_width / 2);
         const y = centerY - Math.cos(angle) * (sepal_width / 2);
         return {id,type: "geo",x,y,rotation: angle,props: { h: sepal_width, w: sepal_height, color: "light-violet", dash: "draw", fill: "solid", font: "draw", geo: "ellipse", size: "xl" }};
       }),
-      // Front petals (violet)
-      ...angles.map((angle, index) => {
-        const id = createShapeId(`bgEllipse${index + 1}`);
+      // Petals (violet)
+      ...angles_petal.map((angle, index) => {
+        const id = createShapeId(`petal${index + 1}`);
         const x = centerX + Math.sin(angle) * (petal_width / 2);
         const y = centerY - Math.cos(angle) * (petal_width / 2);
         return {id,type: "geo",x,y,rotation: angle,props: { h: petal_width, w: petal_height, color: "violet", dash: "draw", fill: "solid", font: "draw", geo: "ellipse", size: "xl" }};
