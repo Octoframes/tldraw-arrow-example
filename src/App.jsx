@@ -17,22 +17,11 @@ export default function App() {
         // Calculate position so that rotation occurs around the center
         const x = centerX + Math.sin(angle) * (height / 2);
         const y = centerY - Math.cos(angle) * (height / 2);
-        return {
-          id,
-          type: "geo",
-          x,
-          y,
-          rotation: angle,
-          props: { h: height, w: width, color: "violet", dash: "draw", fill: "solid", font: "draw", geo: "ellipse", size: "xl" },
+        return {id,type: "geo",x,y,rotation: angle, props: { h: height, w: width, color: "violet", dash: "draw", fill: "solid", font: "draw", geo: "ellipse", size: "xl" },
         };
       }),
       // Center Ellipse
-      {
-        id: createShapeId("centerEllipse"),
-        type: "geo",
-        x: centerX - 25,
-        y: centerY - 25,
-        props: { h: 50, w: 50, color: "yellow", dash: "draw", fill: "solid", font: "draw", geo: "ellipse", size: "m" },
+      {id: createShapeId("centerEllipse"), type: "geo", x: centerX - 25, y: centerY - 25, props: { h: 50, w: 50, color: "yellow", dash: "draw", fill: "solid", font: "draw", geo: "ellipse", size: "m" },
       },
     ];
 
