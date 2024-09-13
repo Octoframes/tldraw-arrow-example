@@ -14,14 +14,14 @@ export default function App() {
 
     const anglesPetal = [0, (Math.PI * 2) / 3, (Math.PI * 4) / 3];
     const anglesSepal = anglesPetal.map((a) => a + Math.PI / 3);
-
+    const commonProps = {dash: "draw",fill: "solid",font: "draw",geo: "ellipse",size: "xl"};
     const shapes = [
       // Sepals
-      ...anglesSepal.map((a, i) => ({ id: createShapeId(`sepal${i + 1}`), type: "geo", x: centerX + Math.sin(a) * (sepalW / 2), y: centerY - Math.cos(a) * (sepalW / 2), rotation: a, props: { h: sepalW, w: sepalH, color: "light-violet", dash: "draw", fill: "solid", font: "draw", geo: "ellipse", size: "xl" } })),
+      ...anglesSepal.map((a, i) => ({ id: createShapeId(`sepal${i + 1}`), type: "geo", x: centerX + Math.sin(a) * (sepalW / 2), y: centerY - Math.cos(a) * (sepalW / 2), rotation: a, props: { h: sepalW, w: sepalH, color: "light-violet", ...commonProps} })),
       // Petals
-      ...anglesPetal.map((a, i) => ({ id: createShapeId(`petal${i + 1}`), type: "geo", x: centerX + Math.sin(a) * (petalW / 2), y: centerY - Math.cos(a) * (petalW / 2), rotation: a, props: { h: petalW, w: petalH, color: "violet", dash: "draw", fill: "solid", font: "draw", geo: "ellipse", size: "xl" } })),
+      ...anglesPetal.map((a, i) => ({ id: createShapeId(`petal${i + 1}`), type: "geo", x: centerX + Math.sin(a) * (petalW / 2), y: centerY - Math.cos(a) * (petalW / 2), rotation: a, props: { h: petalW, w: petalH, color: "violet", ...commonProps } })),
       // Center Ellipse
-      { id: createShapeId("centerEllipse"), type: "geo", x: centerX - r, y: centerY - r, props: { h: r * 2, w: r * 2, color: "violet", dash: "draw", fill: "solid", font: "draw", geo: "ellipse", size: "xl" } },
+      { id: createShapeId("centerEllipse"), type: "geo", x: centerX - r, y: centerY - r, props: { h: r * 2, w: r * 2, color: "violet", ...commonProps} },
     ];
 
     editor.createShapes(shapes);
